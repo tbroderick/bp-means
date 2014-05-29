@@ -1,4 +1,4 @@
-function [Z,A] = bp_means_plus_plus(X, lambda_sq, K)
+function [Z,A] = bp_means_plus_plus(X, lambda_sq, K, verbose)
 % Performs BP-means++ initialization (both finite and variable K versions)
 % inputs:
 % ---- * X: an N x D matrix for N data points with D dimensions each
@@ -6,6 +6,7 @@ function [Z,A] = bp_means_plus_plus(X, lambda_sq, K)
 % -------- (set to zero for no penalty)
 % ---- * K: set to a finite number for a fixed number of features
 % -------- (set to Inf to find a number of features)
+% ---- * verbose: if true, writes status updates to screen
 % outputs:
 % ---- * Z: initial N x k feature belonging matrix (for k either K or dynamic)
 % ---- * A: initial k x D feature means matrix
@@ -48,36 +49,11 @@ while(keep_going)
 	old_obj = objective;
 	[weights, objective, keep_going] = calc_objective(...
 		X,Zprop,Aprop,lambda_sq,K,old_obj);
-	disp(sprintf('BP-means++ (prop K = %d): old obj: %f, new obj: %f', ...
-		k, old_obj, objective));
+	if(verbose)
+		disp(sprintf('BP-means++ (prop K = %d): old obj: %f, new obj: %f', ...
+			k, old_obj, objective));
+	end
 end
 
-end
-
-function [weights, objective, keep_going] = calc_objective(Xloc, Zloc, Aloc, ...
-	lambda_sq, K, old_obj)
-% inputs:
-% ----* Xloc: current N x D data matrix
-% ----* Zloc: current N x k feature belonging matrix
-% --------* (k = current # of features)
-% ----* Aloc: current k x D matrix of feature means
-% ----* lambda_sq: value of lambda^2 in the objective (zero if none)
-% ----* K: if finite, fixed K value (otherwise Inf)
-% ----* old_obj: old objective value, for comparison
-% outputs:
-% ----* weights: N x 1 unnormalized vector of weights
-% ----* objective: the objective value given the inputs
-% ----* keep_going: a boolean value (true [1]  means keep iterating)
-	
-	weights = sum((Xloc - Zloc * Aloc).^2,2);
-	k = size(Zloc, 2);
-
-	% how to count # features in the objective
-	k_obj = (K < Inf)*K + (~(K < Inf))*k;
-	objective = sum(weights) + lambda_sq * k_obj;
-	% case 1: K is fixed and finite
-	keep_going = (K < Inf)*(k <= K) + ...
-		... % case 2: we are finding K
-		(~(K < Inf))*(objective < old_obj);
 end
 

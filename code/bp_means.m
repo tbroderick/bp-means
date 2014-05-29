@@ -1,4 +1,4 @@
-function [Z,A,obj] = bp_means(X, Zinit, Ainit, lambda_sq, Kinput, max_iters)
+function [Z,A,obj] = bp_means(X, Zinit, Ainit, lambda_sq, Kinput, max_iters, verbose)
 % Performs BP-means algorithm (both finite and variable K versions)
 % inputs:
 % ---- * X: an N x D matrix for N data points with D dimensions each
@@ -8,7 +8,8 @@ function [Z,A,obj] = bp_means(X, Zinit, Ainit, lambda_sq, Kinput, max_iters)
 % -------- (set to zero for no penalty)
 % ---- * Kinput: if finite, K is fixed to Kinput;
 % -------- if Inf, K is dynamic
-% -----* max_iters: Max # of iterations to run
+% ---- * max_iters: Max # of iterations to run
+% ---- * verbose: if true, writes status updates to screen
 % outputs:
 % ---- * Z: final N x K feature belonging matrix
 % ---- * A: final K x D feature means matrix
@@ -80,9 +81,9 @@ while(keep_going)
 	end	
 
 	% testing
-	diffs = X - Z * A;
-	disp(sprintf('check: %f, %d', sum(sum(diffs.^2)) + ...
-		lambda_sq * size(Z,2), size(Z,2)));
+	%diffs = X - Z * A;
+	%disp(sprintf('check: %f, %d', sum(sum(diffs.^2)) + ...
+	%	lambda_sq * size(Z,2), size(Z,2)));
 
 	% update A
 	A = inv(Z' * Z) * Z' * X;
@@ -100,8 +101,10 @@ while(keep_going)
 	keep_going = (Niter < max_iters) && ...
 		(new_objective < old_objective);
 
-	disp(sprintf('BP-means (iter %d): old obj: %f, new obj: %f', ...
-		Niter, old_objective, new_objective));
+	if(verbose)
+		disp(sprintf('BP-means (iter %d): old obj: %f, new obj: %f', ...
+			Niter, old_objective, new_objective));
+	end
 end
 
 % return objective value

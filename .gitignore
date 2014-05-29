@@ -1,2 +1,4 @@
 *.swp
-*/results/*
+data/simulated/results*
+data/tabletop/results*
+data/tabletop/test/*

@@ -224,10 +224,5 @@ else
 	disp('There are 0 feature means to output');
 end
 
-%% write reconstructed data to files
-pics_recon = Z * A;
-for n = 1:N
-	% coming soon! ****
 end
 
-end

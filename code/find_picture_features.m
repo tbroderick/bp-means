@@ -1,4 +1,5 @@
 function [Z,A,pics] = find_picture_features(directory, pic_format, varargin)
+	<a href="http://papers.nips.cc/paper/4980-streaming-variational-bayes.pdf">[linked pdf]</a> 
 % pre-process image data
 % then run BP-means
 % then post-process the image features
@@ -18,7 +19,25 @@ function [Z,A,pics] = find_picture_features(directory, pic_format, varargin)
 % ----* Z: the N x K feature belonging matrix (binary)
 % ----* A: the K x D matrix of feature means
 % ----* pics: (aka X) the N x D data matrix
-
+%
+% ---------------------------------------
+% BP-MEANS Copyright 2013, 2014 Tamara Broderick (tab@stat.berkeley.edu)
+%
+% This file is part of BP-MEANS. 
+%
+% BP-MEANS is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% BP-MEANS is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with BP-MEANS.  If not, see <http://www.gnu.org/licenses/>.
+% ---------------------------------------
 
 %%% gather optional inputs
 % Default values of optional inputs

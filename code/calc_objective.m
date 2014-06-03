@@ -12,6 +12,23 @@ function [weights, objective, keep_going] = calc_objective(Xloc, Zloc, Aloc, ...
 % ----* weights: N x 1 unnormalized vector of weights
 % ----* objective: the objective value given the inputs
 % ----* keep_going: a boolean value (true [1]  means keep iterating)
+%
+% ---------------------------------------
+% BP-MEANS Copyright 2013, 2014 Tamara Broderick (tab@stat.berkeley.edu)
+%
+% BP-MEANS is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% BP-MEANS is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with BP-MEANS.  If not, see <http://www.gnu.org/licenses/>.
+% ---------------------------------------
 
         weights = sum((Xloc - Zloc * Aloc).^2,2);
       	k = size(Zloc, 2);

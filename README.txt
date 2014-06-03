@@ -3,7 +3,34 @@
 ======================== 
 
 ======================== 
-0. Example use cases
+0. Citation and Licensing
+======================== 
+
+If you use this code and/or the simulated data set, please cite 
+Broderick, T., Kulis, B. and Jordan, M. I. "MAD-bayes: MAP-based asymptotic derivations from Bayes." International Conference on Machine Learning. 2013.
+
+If you use the tabletop data set, please cite
+Griffiths, T. L., and Ghahramani, Z. "The Indian Buffet Process: An introduction and review." The Journal of Machine Learning Research 12 (2011): 1185-1224.
+
+Note: This is the README for BP-MEANS.
+
+BP-MEANS Copyright 2013, 2014 Tamara Broderick (tab@stat.berkeley.edu)
+
+BP-MEANS is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+BP-MEANS is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with BP-MEANS.  If not, see <http://www.gnu.org/licenses/>.
+
+======================== 
+1. Example use cases
 ======================== 
 
 The following examples assume the user is running Matlab from within the “code” directory.
@@ -18,25 +45,28 @@ The following examples assume the user is running Matlab from within the “code
 
 (0.2) Find exactly 5 features in the jpg tabletop data after running PCA (with 100 dimensions) on the pictures first. Return the best run after 1000 random restarts. Note: this saves the results of PCA for later use in the file “data/tabletop/results/pca_results.mat”.
 
->> [Z,A,pics] = find_picture_features('../data/tabletop','jpg','pca_dims',100,'Nstarts',1000,'Kinput’,5);
+>> [Z,A,pics] = find_picture_features('../data/tabletop','jpg','pca_dims',100,'Nstarts',1000,'Kinput',5);
 
 (0.3) Find features of an unknown cardinality that optimize the BP-means objective with lambda^2 penalty equal to 20. Use the jpg tabletop data. Use the principal components already found in the previous computation. Return the best run after 1000 random restarts.
 
 >> [Z,A,pics] = find_picture_features('../data/tabletop','jpg','pca_dims',100,'pca_file','../data/tabletop/results/pca_results.mat','Nstarts',1000,'lambda_sq',20);
 
 ======================== 
-1. Data overview
+2. Data overview
 ======================== 
 
 The “data” directory contains two folders: “simulated” and “tabletop”.
 
 The “simulated” folder contains the code “simulate_feature_data.m” for simulating noiseless “dice” pictures. In these pictures, the natural interpretation is that the features should cover all the dice pips, or dots. A sample collection of 100 simulated data points generated from this code is included.
 
-The “tabletop” 
-*** cite
+The “tabletop” folder contains a data set described in the following paper and provided by the authors of that paper:
+—————
+Griffiths, T. L., and Ghahramani, Z. "The Indian Buffet Process: An introduction and review." The Journal of Machine Learning Research 12 (2011): 1185-1224.
+—————
+In these pictures, the natural interpretation is that the features should cover the different combinations of items on the tables. E.g., one possible feature allocation would make each of the following a feature: (1) the table and background together, (2) the Klein bottle, (3) the handaxe, (4) the cell phone, (5) the $20 bill. 
 
 ======================== 
-2. Code overview
+3. Code overview
 ======================== 
 
 Most code is in the “code” directory. The one exception is the following code in the directory “data/simulated”:
@@ -56,7 +86,7 @@ The remaining files support “find_picture_features.m”:
 * reverse_high_dim_pca.m: Takes data in the principal components space and returns it to the original problem space.
 
 ======================== 
-3. Some example outputs
+4. Some example outputs
 ======================== 
 
 * Running (0.0) in Section 0 above returns the following objective values for different K. Note that we expect that an objective value of 0.0 should be obtainable for the right number of features (4) since this data is simulated exactly from a feature allocation without noise. We expect optimal objectives to decrease as K increases since we are using lambda^2 = 0 here, and more features gives a better fit for the Frobenius norm part.
